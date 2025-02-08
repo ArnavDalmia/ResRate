@@ -52,17 +52,7 @@ def extract_text_from_pdf(pdf_path):
 # Routes
 @app.route('/')
 def index():
-    if not google.authorized:
-        return redirect(url_for("google.login"))
-
-    # Fetch user info
-    resp = google.get("/userinfo")
-    if not resp.ok:
-        user_info = {"name": "Guest"}  # Default fallback
-    else:
-        user_info = resp.json()
-
-    return render_template('index.html', user=user_info)
+    return render_template('index.html')
 
 
 #{{ google.get("/oauth2/v2/userinfo").json()["name"] }}
@@ -95,6 +85,8 @@ def analyze():
     prompt = f"""
 Analyze this resume for clarity, alignment with the provided job description, and overall effectiveness. Take into account use the additional information that is provided in the comments if they are related to the resume critique. If the comments are not related then keep the resume stuff seperate but in the end of the analysis address the comment. Provide detailed, actionable feedback:
 
+
+Check if its a resume first of all. If its not a resume say Im not sure what to do with this.
 ---
 **Minimal Changes IDEA**  
 - Suggestions should be minimal and critical rather than things that could be open to subjectivity. If the resume is relatively strong, limit suggestions to minor improvements. Use the guage if they are a junior, intermiedate, and senior and the job desc to make this decision. If they are one of those people who have a strong resume just give a few holistic points and scrap the rest of the analysis.
@@ -189,9 +181,6 @@ Analyze this resume for clarity, alignment with the provided job description, an
 
 **7. Final Advice**  
 - "Focus on adding metrics to quantify your achievements and tailor your resume to your target roles."  
-
-
-
 
 
 ---

@@ -6,7 +6,7 @@
 </head>
 <body class="p-4">
     <div class="container">
-        <h1 class="mb-4">Welcome, {{ user.get('name', 'Guest') }}!</h1>
+        <h1 class="mb-4">Welcome, Bob!</h1>
         
         <form action="/analyze" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
@@ -20,8 +20,8 @@
             </div>
 
             <div class="mb-3">
-                <label class="form-label">Additional Comments for consideration:</label>
-                <textarea class="form-control" name="job_desc" rows="5"></textarea>
+                <label class="form-label">Additional Comments for consideration (this can overide the default instructions so be careful):</label>
+                <textarea class="form-control" name="comments" rows="5"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary">Analyze</button>
