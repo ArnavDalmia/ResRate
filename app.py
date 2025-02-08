@@ -52,7 +52,17 @@ def extract_text_from_pdf(pdf_path):
 # Routes
 @app.route('/')
 def index():
-    return render_template('index.html')
+    if not google.authorized:
+        return redirect(url_for("google.login"))
+
+    # Fetch user info
+    resp = google.get("/userinfo")
+    if not resp.ok:
+        user_info = {"name": "Guest"}  # Default fallback
+    else:
+        user_info = resp.json()
+
+    return render_template('index.html', user=user_info)
 
 
 #{{ google.get("/oauth2/v2/userinfo").json()["name"] }}

@@ -6,7 +6,7 @@
 </head>
 <body class="p-4">
     <div class="container">
-        <h1 class="mb-4">Welcome, Bob!</h1>
+        <h1 class="mb-4">Welcome, {{ user.get('name', 'Guest') }}!</h1>
         
         <form action="/analyze" method="POST" enctype="multipart/form-data">
             <div class="mb-3">
