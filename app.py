@@ -93,7 +93,7 @@ def analyze():
     # GPT-4o Analysis
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     prompt = f"""
-Analyze this resume for clarity, alignment with the provided job description, and overall effectiveness. Provide detailed, actionable feedback:
+Analyze this resume for clarity, alignment with the provided job description, and overall effectiveness. Take into account use the additional information that is provided in the comments if they are related to the resume critique. If the comments are not related then keep the resume stuff seperate but in the end of the analysis address the comment. Provide detailed, actionable feedback:
 
 ---
 **Minimal Changes IDEA**  
@@ -189,6 +189,10 @@ Analyze this resume for clarity, alignment with the provided job description, an
 
 **7. Final Advice**  
 - "Focus on adding metrics to quantify your achievements and tailor your resume to your target roles."  
+
+
+
+
 
 ---
     RESUME: {resume_text[:3000]}
