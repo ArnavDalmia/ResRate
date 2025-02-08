@@ -87,12 +87,17 @@ def analyze():
     # Get Job Description
     job_desc = request.form.get('job_desc', '')
 
+    # Get Additional Comments
+    comments = request.form.get('comments', '')
+
     # GPT-4o Analysis
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     prompt = f"""
-Analyze this resume for clarity, alignment with the provided job description, and overall effectiveness. Provide detailed, actionable feedback in the following format:
+Analyze this resume for clarity, alignment with the provided job description, and overall effectiveness. Provide detailed, actionable feedback:
 
 ---
+**Minimal Changes IDEA**  
+- Suggestions should be minimal and critical rather than things that could be open to subjectivity. If the resume is relatively strong, limit suggestions to minor improvements. Use the guage if they are a junior, intermiedate, and senior and the job desc to make this decision. If they are one of those people who have a strong resume just give a few holistic points and scrap the rest of the analysis.
 
 **1. Initial Impression**  
 - Start with a blunt, honest assessment of the user’s level and experience. For example:  
@@ -154,14 +159,7 @@ Analyze this resume for clarity, alignment with the provided job description, an
   - "Your resume seems to showcase everything rather than a specialization. Tailor it to the specific field or role you’re targeting."  
 
 ---
-
-**7. Minimal Changes for Strong Resumes**  
-- If the resume is already strong, limit suggestions to minor improvements. For example:  
-  - "Your resume is well-structured and aligned with the job description. Consider adding a few more metrics to quantify your achievements."  
-
----
-
-**8. Final Advice**  
+**7. Final Advice**  
 - Summarize the most critical changes needed.  
 - Encourage the user to focus on their strengths and tailor their resume to their target roles.  
 
@@ -193,16 +191,9 @@ Analyze this resume for clarity, alignment with the provided job description, an
 - "Focus on adding metrics to quantify your achievements and tailor your resume to your target roles."  
 
 ---
-
-### **Why This Works**
-- **Detailed and Structured**: The prompt ensures the model provides **specific, actionable feedback** in a clear format.  
-- **Tailored to User Level**: The model adjusts its feedback based on whether the user is a junior, intermediate, or advanced candidate.  
-- **Professional Tone**: The feedback is constructive and adapted to the user’s profession.  
-- **Focus on ATS**: The model emphasizes keywords and formatting that improve ATS compatibility.  
-
----
     RESUME: {resume_text[:3000]}
     JOB DESCRIPTION: {job_desc[:1000]}
+    COMMENTS: {comments[:1000]}
     """
 
     response = client.chat.completions.create(
