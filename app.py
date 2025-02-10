@@ -200,7 +200,7 @@ Check if its a resume first of all. If its not a resume say Im not sure what to 
     """
 
     response = client.chat.completions.create(
-        model="gpt-4o",
+        model="o1-mini", #gpt-4o
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3
     )
